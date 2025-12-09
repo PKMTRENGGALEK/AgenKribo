@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agen Kribo - Aksi Gencar Skrining Tuberkulosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Kustom untuk Animasi -->
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Animasi mengambang untuk ikon Agen Kribo */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      #kribo-icon {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Container untuk seluruh adegan animasi */
+      .animation-scene {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      /* Container untuk motor dan asap */
+      .motorcycle-wrapper {
+        position: absolute;
+        bottom: 20%;
+        width: 250px;
+        height: 150px;
+        animation: drive-by 12s linear infinite;
+      }
+
+      /* Animasi motor berjalan dari kiri ke kanan */
+      @keyframes drive-by {
+        0% {
+          right: -300px;
+        }
+        100% {
+          right: 100%;
+        }
+      }
+
+      /* Gambar motor */
+      .motorcycle-img {
+        position: absolute;
+        width: 200px;
+        bottom: 0;
+        left: 0;
+        filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
+      }
+
+      /* Container untuk asap */
+      .smoke-container {
+        position: absolute;
+        bottom: 20px;
+        left: 40px;
+      }
+
+      /* Satu gelembung asap */
+      .smoke-puff {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: rgba(220, 220, 220, 0.8);
+        border-radius: 50%;
+        filter: blur(5px);
+        opacity: 0;
+      }
+
+      /* Animasi untuk setiap gelembung asap */
+      .smoke-puff {
+        animation: puff-animation 2s ease-out infinite;
+      }
+
+      /* Memberikan jeda animasi untuk setiap gelembung */
+      .smoke-puff:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .smoke-puff:nth-child(3) {
+        animation-delay: 1s;
+      }
+      .smoke-puff:nth-child(4) {
+        animation-delay: 1.5s;
+      }
+
+      @keyframes puff-animation {
+        0% {
+          transform: translateY(0) scale(0.3);
+          opacity: 0;
+        }
+        15% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(-50px) translateX(20px) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* Animasi pulse untuk judul */
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .pulse-animation {
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      /* Efek glow untuk judul */
+      .glow {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+          0 0 40px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Card styling */
+      .info-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Logo card styling */
+      .logo-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .logo-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Tombol styling kustom */
+      .action-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .action-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .action-button:hover::before {
+        left: 100%;
+      }
+
+      .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Tombol Mulai Skrining styling */
+      .start-button {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .start-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .start-button:hover::before {
+        left: 100%;
+      }
+
+      .start-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Animasi untuk tombol */
+      @keyframes buttonPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .button-animate {
+        animation: buttonPulse 2s ease-in-out infinite;
+      }
+
+      .button-animate:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      .button-animate:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      /* Modal styling */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s;
+      }
+
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+        border-radius: 20px;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        position: relative;
+        animation: slideIn 0.3s;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .close-button:hover {
+        color: #000;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 640px) {
+        .motorcycle-img {
+          width: 150px;
+        }
+
+        .motorcycle-wrapper {
+          width: 180px;
+        }
+
+        .smoke-container {
+          left: 30px;
+        }
+
+        .smoke-puff {
+          width: 20px;
+          height: 20px;
+        }
+
+        /* Additional responsive adjustments */
+        .logo-container {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin: 15px 0;
+        }
+
+        .logo-item {
+          flex: 0 0 calc(33.333% - 10px);
+          max-width: calc(33.333% - 10px);
+          text-align: center;
+          padding: 8px;
+        }
+
+        .logo-item img {
+          max-height: 50px;
+          width: auto;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .modal-content {
+          padding: 15px;
+          width: 95%;
+          max-height: 80vh;
+          overflow-y: auto;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .modal-buttons .action-button {
+          padding: 12px 15px;
+          font-size: 14px;
+        }
+      }
+
+      @media (min-width: 641px) and (max-width: 1024px) {
+        .modal-content {
+          width: 80%;
+          max-width: 500px;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .modal-buttons .action-button {
+          padding: 15px 20px;
+          font-size: 16px;
+        }
+      }
+
+      @media (min-width: 1025px) {
+        .modal-content {
+          width: 60%;
+          max-width: 550px;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .modal-buttons .action-button {
+          padding: 15px 20px;
+          font-size: 16px;
+        }
+      }
+
+      /* Improved footer styling */
+      .footer {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen overflow-y-auto bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"
+  >
+    <!-- Latar Belakang Animasi Motor -->
+    <div class="animation-scene">
+      <div class="motorcycle-wrapper">
+        <!-- Gambar Agen Kribo di Motor -->
+        <img
+          src="https://z-cdn-media.chatglm.cn/files/e0d2fd9f-02ae-4fa9-82dc-7a40287a394c.png?auth_key=1865223936-32b074ac65de4a4b93da31cfe323b6ad-0-b69f71a4837153ed7af37d718e01ed48"
+          alt="Agen Kribo di Motor"
+          class="motorcycle-img"
+        />
+
+        <!-- Efek Asap -->
+        <div class="smoke-container">
+          <div class="smoke-puff"></div>
+          <div class="smoke-puff"></div>
+          <div class="smoke-puff"></div>
+          <div class="smoke-puff"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container Utama -->
+    <div
+      class="relative z-10 min-h-screen w-full flex flex-col items-center justify-between px-2 sm:px-4 py-6"
+    >
+      <div class="max-w-6xl w-full flex-grow flex flex-col justify-center">
+        <!-- Header dengan Logo -->
+        <div class="text-center mb-6 sm:mb-8">
+          <div class="flex justify-center mb-4">
+            <img
+              src="https://pkmtrenggalek.github.io/rekamdata/kribo.png"
+              alt="Agen Kribo Icon"
+              class="w-20 h-20 sm:w-25 sm:h-25 md:w-29 md:h-29 lg:w-38 lg:h-38 drop-shadow-2xl"
+              id="kribo-icon"
+            />
+          </div>
+          <h1
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-2 glow pulse-animation"
+          >
+            AGEN KRIBO
+          </h1>
+        </div>
+
+        <!-- Judul Utama -->
+        <div class="text-center mb-8 sm:mb-10">
+          <h2
+            class="text-xl sm:text-1xl md:text-2xl lg:text-3xl font-bold text-white mb-2"
+          >
+            AKSI GENCAR SKRINING TUBERKULOSA
+          </h2>
+          <p
+            class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-yellow-300"
+          >
+            PUSKESMAS TRENGGALEK
+          </p>
+        </div>
+
+        <!-- Konten Utama dengan Info Cards -->
+        <div
+          class="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-10"
+        >
+          <!-- Info Cards -->
+          <div
+            class="w-full lg:w-3/5 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+          >
+            <!-- COD JLP Card -->
+            <div class="info-card rounded-xl p-4 sm:p-6">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 sm:w-14 sm:h-14 bg-red-500 rounded-full flex items-center justify-center mr-3 sm:mr-4"
+                >
+                  <span class="text-white font-bold text-lg sm:text-xl"
+                    >JLP</span
+                  >
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-800">
+                  COD JLP
+                </h3>
+              </div>
+              <div class="mb-3">
+                <p class="text-gray-700 text-sm sm:text-base italic">
+                  "Caril orang Batuk Kirim Dahak, melalui Jalur Layanan Petugas"
+                </p>
+              </div>
+              <div class="space-y-3">
+                <div class="bg-blue-50 rounded-lg p-3">
+                  <div class="flex items-center mb-2">
+                    <i
+                      class="fas fa-building text-blue-500 mr-2 text-lg sm:text-xl"
+                    ></i>
+                    <span class="text-gray-800 font-bold text-base sm:text-lg"
+                      >DALAM GEDUNG</span
+                    >
+                  </div>
+                  <ul class="ml-6 text-gray-700 text-sm sm:text-base">
+                    <li>• Puskesmas dan Jaringannya</li>
+                  </ul>
+                </div>
+                <div class="bg-green-50 rounded-lg p-3">
+                  <div class="flex items-center mb-2">
+                    <i
+                      class="fas fa-cloud-sun text-green-500 mr-2 text-lg sm:text-xl"
+                    ></i>
+                    <span class="text-gray-800 font-bold text-base sm:text-lg"
+                      >LUAR GEDUNG</span
+                    >
+                  </div>
+                  <ul class="ml-6 text-gray-700 text-sm sm:text-base">
+                    <li>• Posyandu ILP</li>
+                    <li>• Sekolah</li>
+                    <li>• Pondok Pesantren</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- COD JLS Card -->
+            <div class="info-card rounded-xl p-4 sm:p-6">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 sm:w-14 sm:h-14 bg-green-500 rounded-full flex items-center justify-center mr-3 sm:mr-4"
+                >
+                  <span class="text-white font-bold text-lg sm:text-xl"
+                    >JLS</span
+                  >
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-800">
+                  COD JLS
+                </h3>
+              </div>
+              <div class="mb-3">
+                <p class="text-gray-700 text-sm sm:text-base italic">
+                  "Melakukan kerjasama TBC Screening dengan tenaga kesehatan"
+                </p>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center">
+                  <i
+                    class="fas fa-clinic-medical text-purple-500 mr-3 text-lg sm:text-xl"
+                  ></i>
+                  <span class="text-gray-700 text-sm sm:text-base"
+                    >Klinik & Apotek</span
+                  >
+                </div>
+                <div class="flex items-center">
+                  <i
+                    class="fas fa-user-md text-blue-500 mr-3 text-lg sm:text-xl"
+                  ></i>
+                  <span class="text-gray-700 text-sm sm:text-base"
+                    >Dokter Praktik</span
+                  >
+                </div>
+                <div class="flex items-center">
+                  <i
+                    class="fas fa-hospital text-red-500 mr-3 text-lg sm:text-xl"
+                  ></i>
+                  <span class="text-gray-700 text-sm sm:text-base"
+                    >Rumah Sakit</span
+                  >
+                </div>
+                <div class="flex items-center">
+                  <i
+                    class="fas fa-user-nurse text-green-500 mr-3 text-lg sm:text-xl"
+                  ></i>
+                  <span class="text-gray-700 text-sm sm:text-base"
+                    >Tenaga Kesehatan</span
+                  >
+                </div>
+                <div class="flex items-center">
+                  <i
+                    class="fas fa-leaf text-yellow-600 mr-3 text-lg sm:text-xl"
+                  ></i>
+                  <span class="text-gray-700 text-sm sm:text-base">Tabib</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Mulai Skrining -->
+        <div class="flex justify-center items-center mb-8 sm:mb-10">
+          <button
+            id="startScreening"
+            class="start-button text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center justify-center text-center text-lg sm:text-xl"
+          >
+            <i class="fas fa-play-circle mr-3 text-xl sm:text-2xl"></i>
+            <span>Mulai Skrining</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div
+        class="w-full text-center p-4 sm:p-6 text-white/80 text-sm sm:text-base footer rounded-t-2xl"
+      >
+        &copy; 2024 Aksi Gencar Skrining Tuberkulosis - Agen Kribo | Puskesmas
+        Trenggalek
+      </div>
+    </div>
+
+    <!-- Modal untuk Tiga Tombol Aksi -->
+    <div id="actionModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeModal">&times;</span>
+        <h2 class="text-xl font-bold text-center mb-4 text-gray-800">
+          Pilih Jenis Skrining
+        </h2>
+
+        <div class="modal-buttons flex flex-wrap justify-center">
+          <!-- Tombol 1: Skrining Pada Jaringan Pelayanan -->
+          <a
+            href="https://pkmtrenggalek.github.io/rekamdata/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-button button-animate text-white font-bold py-3 px-4 rounded-full shadow-2xl flex items-center justify-center text-center w-full"
+          >
+            <i class="fas fa-network-wired mr-3"></i>
+            <span>Skrining Pada Jaringan Pelayanan</span>
+          </a>
+
+          <!-- Tombol 2: Skrining pada anak dan dewasa -->
+          <a
+            href="https://pkmtrenggalek.github.io/Skrining_AgenKribo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-button button-animate text-white font-bold py-3 px-4 rounded-full shadow-2xl flex items-center justify-center text-center w-full"
+          >
+            <i class="fas fa-users mr-3"></i>
+            <span>Skrining pada Anak & Dewasa</span>
+          </a>
+
+          <!-- Tombol 3: Dokumen -->
+          <a
+            href="https://drive.google.com/drive/folders/1lmEVJ-lUmKN9utLcaLNxHNFtCct-u0kX"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-button button-animate text-white font-bold py-3 px-4 rounded-full shadow-2xl flex items-center justify-center text-center w-full"
+          >
+            <i class="fas fa-file-alt mr-3"></i>
+            <span>Dokumen</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Awesome untuk Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- JavaScript untuk Modal -->
+    <script>
+      // Get the modal
+      const modal = document.getElementById("actionModal");
+
+      // Get the button that opens the modal
+      const startBtn = document.getElementById("startScreening");
+
+      // Get the <span> element that closes the modal
+      const closeBtn = document.getElementById("closeModal");
+
+      // When the user clicks on the button, open the modal
+      startBtn.onclick = function () {
+        modal.classList.add("show");
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      closeBtn.onclick = function () {
+        modal.classList.remove("show");
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.classList.remove("show");
+        }
+      };
+    </script>
+  </body>
+</html>
