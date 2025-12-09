@@ -210,6 +210,12 @@
         position: relative;
         overflow: hidden;
       }
+      .start-JLS {
+        background: linear-gradient(135deg, #93abfb 0%, #57f58c 100%);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
 
       .start-button::before {
         content: "";
@@ -568,7 +574,7 @@
               </div>
               <div class="mb-3">
                 <p class="text-gray-700 text-sm sm:text-base italic">
-                  "Melakukan kerjasama TBC Screening dengan tenaga kesehatan"
+                  "Cari orang batuk kirim dahak, melalui Jalur layanan Petugas"
                 </p>
               </div>
               <div class="space-y-2">
@@ -614,18 +620,30 @@
             </div>
           </div>
         </div>
-
-        <!-- Tombol Mulai Skrining -->
-        <div class="flex justify-center items-center mb-8 sm:mb-10">
-          <button
-            id="startScreening"
-            class="start-button text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center justify-center text-center text-lg sm:text-xl"
+        <!-- COD JLS -->
+       <!-- Container untuk kedua tombol -->
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 sm:mb-10">
+          
+          <!-- Tombol 1: Form COD JLS -->
+          <a
+            href="https://pkmtrenggalek.github.io/rekamdata/index.html"
+            target="_blank"
+            class="start-JLS bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center justify-center text-center text-lg sm:text-xl transition-colors duration-300"
           >
             <i class="fas fa-play-circle mr-3 text-xl sm:text-2xl"></i>
-            <span>Mulai Skrining</span>
+            <span>Form COD JLS</span>
+          </a>
+
+          <!-- Tombol 2: Mulai Skrining -->
+          <button
+            id="startScreening"
+            class="start-button bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl flex items-center justify-center text-center text-lg sm:text-xl transition-colors duration-300"
+          >
+            <i class="fas fa-play-circle mr-3 text-xl sm:text-2xl"></i>
+            <span>Apakah Anda Berisko TBC? Ayo Mulai Skrining</span>
           </button>
+
         </div>
-      </div>
 
       <!-- Footer -->
       <div
@@ -667,16 +685,7 @@
             <span>Skrining pada Anak & Dewasa</span>
           </a>
 
-          <!-- Tombol 3: Dokumen -->
-          <a
-            href="https://drive.google.com/drive/folders/1lmEVJ-lUmKN9utLcaLNxHNFtCct-u0kX"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="action-button button-animate text-white font-bold py-3 px-4 rounded-full shadow-2xl flex items-center justify-center text-center w-full"
-          >
-            <i class="fas fa-file-alt mr-3"></i>
-            <span>Dokumen</span>
-          </a>
+          
         </div>
       </div>
     </div>
